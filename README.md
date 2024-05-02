@@ -24,13 +24,4 @@ Certifique-se de ter o seguinte instalado em sua máquina:
 
 <br>
   
-## :pencil2: Contribuindo 
 
-Se você quiser contribuir para este projeto, por favor, siga os passos abaixo:
-
-- Crie um fork do projeto.
-- Crie uma branch para a sua contribuição: `git checkout -b feature/nova-funcionalidade`.
-- Faça as alterações desejadas.
-- Faça o commit das suas alterações: `git commit -m 'Adiciona nova funcionalidade`.
-- Faça o push para a sua branch: `git push origin feature/nova-funcionalidade`.
-- Abra um pull request.
