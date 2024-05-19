@@ -14,30 +14,21 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
-    canActivate: [AuthGuard] 
   },  {
     path: 'call-page',
     component: CallPageComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard] 
   },
   {
     path: 'home-page',
     component: HomePageComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard] 
   },
   {
     path: 'resume-page',
     component: ResumePageComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard] 
   },
   {
-    path: 'student-profile-page',
-    component: StudentProfilePageComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard] 
+    path: 'students-page',
+    loadChildren: () => import('./pages/student-profile-page/student-profile-page.module').then(m => m.StudentProfilePageModule)
   }
 ];
 
