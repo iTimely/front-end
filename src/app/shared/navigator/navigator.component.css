@@ -1,11 +1,16 @@
 .nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 120px; /* ou o valor que desejar */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 100vh;
   background-color: #f0f0f0;
-  /* padding: 2em .3em; */
+  overflow-y: auto;
+  z-index: 1000;
 }
 
 .nav-container__buttons {
@@ -14,7 +19,7 @@
   align-items: center;
   justify-content: space-around;
   margin-top: 4em;
-  height: 18em;
+  height: 12em;
 }
 
 .nav-container__buttons__home {

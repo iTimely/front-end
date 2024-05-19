@@ -1,5 +1,6 @@
 .hp-container {
   margin: 2em;
+  margin-left: 140px;
 }
 
 .hp-container__hello {
@@ -24,6 +25,7 @@
   font-size: 24px;
   font-weight: 500;
   line-height: 28px;
+  margin-right: 10px;
 }
 
 .hp-container__class-list__cards {
@@ -45,6 +47,12 @@
   border: 1px solid #f0f0f0;
   box-sizing: border-box;
   margin-right: 1em;
+  cursor: pointer;
+  transition: ease-in-out .2s;
+}
+
+.hp-container__class-list__cards__card:hover {
+  background-color: #e5ea1d;
 }
 
 .hp-container__class-list__cards__card-active {
@@ -57,7 +65,23 @@
   border-radius: 12px;
   border: 1px solid #f0f0f0;
   box-sizing: border-box;
+  margin-right: 1em;
 }
+
+.approved {
+  color: #4cd964;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 19px;
+}
+
+.reproved {
+  color: #ff3b30;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 19px;
+}
+
 
 .hp-container__class-list__cards__card__title {
   color: #1d1d1f;

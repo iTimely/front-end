@@ -5,57 +5,70 @@
 
     <div class="hp-container__class-list__title">
       <h3 class="hp-container__class-list__title__text">Localizar Classes</h3>
-      <h3 class="hp-container__class-list__title__text">Data:24/03/2021</h3>
+      <h3 class="hp-container__class-list__title__text">Data: {{formatedDate}}</h3>
+      <mat-form-field appearance="outline" style="margin-right: 1em;">
+        <mat-label>Selecione uma Turma</mat-label>
+        <mat-select [(ngModel)]="selectedPeriod">
+          <mat-option value="1º aula">1º Horário</mat-option>
+          <mat-option value="2º aula">2º Horário</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+      mat-icon-button aria-label="Example icon button with a home icon"
+      style="margin-bottom: 1em; background-color: #e5ea1d;"
+      (click)="getAlunos()">
+          <mat-icon>search</mat-icon>
+      </button>
     </div>
 
     <div class="hp-container__class-list__cards">
-      <!-- Card de classes, aplicar *ngFor apagar o de baixo quando tiver com o ngFor-->
-      <div class="hp-container__class-list__cards__card">
-        <p class="hp-container__class-list__cards__card__title">5º A - Manhã</p>
-        <p class="hp-container__class-list__cards__card__hour">7:10 - 9:10</p>
-      </div>
-      <!-- Fim do card de classes -->
-      <div class="hp-container__class-list__cards__card-active">
-        <p class="hp-container__class-list__cards__card__title">5º A - Manhã</p>
-        <p class="hp-container__class-list__cards__card__hour">7:10 - 9:10</p>
-      </div>
+        <div *ngFor="let turma of turmas">
+          <div [ngClass]="{
+            'hp-container__class-list__cards__card': turma.turmaId !== selectedTurma.turmaId,
+            'hp-container__class-list__cards__card-active': turma.turmaId === selectedTurma.turmaId,
+          }"
+          (click)="selectTurma(turma)">
+            <p class="hp-container__class-list__cards__card__title">{{turma.turmaNome}} {{turma.periodo}}</p>
+          </div>
+        </div>
     </div>
-
   </div>
 
-  <div class="hp-container__class-details">
+  <div class="hp-container__class-details" *ngIf="alunos.length > 0">
     <div class="hp-container__class-details__class-list">
-      <h3>Turma 5º A - Manhã - 7:10h as 9:10h</h3>
+      <h3>Turma {{selectedTurma.turmaNome}} - {{selectedTurma.periodo}} - {{selectedPeriod}}</h3>
       <div class="hp-container__class-details__class-list__table">
         <div class="hp-container__class-details__class-list__table__header">
           <p>Registro de presença</p>
-          <p>Total de Alunos: 25</p>
+          <p>Total de Alunos: {{alunos.length}}</p>
         </div>
         <div class="hp-container__class-details__class-list__table__items">
-          <!-- Card de aluno na tabela aplicar *ngFor apagar o de baixo quando tiver o ngFor-->
-          <div class="hp-container__class-details__class-list__table__items__item">
+          <div class="hp-container__class-details__class-list__table__items__item" *ngFor="let aluno of alunos">
             <div class="hp-container__class-details__class-list__table__items__item__student">
               <div class="hp-container__class-details__class-list__table__items__item__student__img">
-                <!-- <img src="" alt=""> -->
               </div>
-              <p>Nicole Mattes</p>
+              <p>{{aluno.nome}}</p>
             </div>
-            <div class="hp-container__class-details__class-list__table__items__item__button">
-              <!-- Usar ng class para definir a classe como ativa ou não e alterar no obj do aluno dentro do array-->
-              <div class="hp-container__class-details__class-list__table__items__item__button__option">
+            <div class="hp-container__class-details__class-list__table__items__item__button" (click)="changeAlunoPresence(aluno)">
+              <div [ngClass]="{
+                'hp-container__class-details__class-list__table__items__item__button__option': aluno.presencas,
+                'hp-container__class-details__class-list__table__items__item__button__option-active': !aluno.presencas,
+              }">
                 <p>não</p>
               </div>
-              <div class="hp-container__class-details__class-list__table__items__item__button__option-active">
+              <div [ngClass]="{
+                'hp-container__class-details__class-list__table__items__item__button__option': !aluno.presencas,
+                'hp-container__class-details__class-list__table__items__item__button__option-active': aluno.presencas,
+              }">
                 <p>sim</p>
               </div>
             </div>
           </div>
-          <!-- Fim do card de aluno na tabela -->
         </div>
       </div>
     </div>
 
-    <div class="hp-container__class-details__stats">
+    <div class="hp-container__class-details__stats" *ngIf="alunos.length > 0">
       <div class="hp-container__class-details__stats__table">
         <div class="hp-container__class-details__stats__table__header">
           <h4>Estatísticas de presença - Hoje</h4>
@@ -67,7 +80,7 @@
             </div>
             <div class="hp-container__class-details__stats__table__items__item__texts">
               <p>total de faltas</p>
-              <p>3</p>
+              <p>{{alunosFaltas.length}}</p>
             </div>
           </div>
           <div class="hp-container__class-details__stats__table__items__item">
@@ -76,7 +89,8 @@
             </div>
             <div class="hp-container__class-details__stats__table__items__item__texts">
               <p>Alunos</p>
-              <p>22</p>
+              <p>{{alunos.length}}</p>
+              <!-- <p>{{alunos.length}}</p> -->
             </div>
           </div>
           <div class="hp-container__class-details__stats__table__items__item">
@@ -85,16 +99,18 @@
             </div>
             <div class="hp-container__class-details__stats__table__items__item__texts">
               <p>Presença</p>
-              <p>77%</p>
+              <p>{{percPresenca}}%</p>
             </div>
           </div>
         </div>
 
         <div class="hp-container__class-details__stats__table__button-container">
-          <div class="hp-container__class-details__stats__table__button-container__button">
+          <div class="hp-container__class-details__stats__table__button-container__button" (click)="finalizarChamada()">
             <p>Finalizar chamada!</p>
           </div>
         </div>
+
+
       </div>
     </div>
   </div>
